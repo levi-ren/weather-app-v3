@@ -2,7 +2,11 @@ import axios from "axios";
 import { CurrentWeather } from "../interfaces/weather-models";
 import countryCodes from "../utils/country-codes.json";
 
-axios.defaults.baseURL = "http://localhost:3001";
+const base = import.meta.env.PROD
+  ? "http://13.215.46.207:3000"
+  : "http://localhost:3001";
+
+axios.defaults.baseURL = `${base}/api`;
 
 export interface Location {
   name: string;
