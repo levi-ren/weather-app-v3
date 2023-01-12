@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .glass {
+    @apply dark:bg-gray-100 dark:bg-opacity-30 dark:border-white dark:text-gray-900 bg-gray-800  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border-gray-400 text-white;
+  }
+}
+
+:root {
+  margin: 0;
+  font-family: "Quicksand", Helvetica, Arial, sans-serif;
+}
