@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        quicksand: "Quicksand",
+        quicksand: "Quicksand, sans-serif",
       },
       backgroundImage: {
         day: "url('./assets/day.svg')",
