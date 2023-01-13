@@ -10,6 +10,7 @@ export const Temperature = ({ units, setUnits }: TemparatureProps) => {
       htmlFor="peer"
     >
       <input
+        id="peer"
         type="checkbox"
         onChange={(e) => {
           setUnits((e) => !e);
