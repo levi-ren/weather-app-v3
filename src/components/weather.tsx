@@ -1,12 +1,11 @@
 import { Location } from "../api";
-import { WeatherIcons } from "../assets/icons";
 import { ReactComponent as SunRise } from "../assets/sunrise.svg";
 import { ReactComponent as SunSet } from "../assets/sunset.svg";
 import { ReactComponent as MinTemp } from "../assets/thermometer-colder.svg";
 import { ReactComponent as MaxTemp } from "../assets/thermometer-warmer.svg";
-import { dateToLocaleString } from "../utils/helpers";
 import { useWeatherQuery } from "../utils/useWeatherQuery";
 import { Araw, Oras } from "./datetime";
+import { WeatherIcons } from "./icons";
 import { Spinner } from "./spinner";
 
 interface DateTimeProps {
@@ -16,41 +15,6 @@ interface DateTimeProps {
   dateOnly?: true;
   className?: string;
 }
-
-const DateTime = (props: DateTimeProps) => {
-  const { unix, timeZone, timeOnly, dateOnly, className } = props;
-  const dateTime = new Date(unix * 1000);
-
-  const date = dateToLocaleString(dateTime, {
-    type: "date",
-    timeZone,
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    weekday: "long",
-  });
-
-  const [time, meridiem] = dateToLocaleString(dateTime, {
-    type: "time",
-    timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  }).split(" ");
-
-  return (
-    <>
-      {!dateOnly && (
-        <p className={className}>
-          {time}
-          <span className="text-lg">{meridiem}</span>
-        </p>
-      )}
-
-      {!timeOnly && <p className="text-center">{date}</p>}
-    </>
-  );
-};
 
 type WeatherProps = { location: Location; units: boolean };
 
@@ -67,7 +31,7 @@ export const Weather = ({ location, units }: WeatherProps) => {
     return (
       <section
         id="weather loader"
-        className="w-full border rounded-lg md:h-[318px] sm:h-[294px]  grid place-items-center h-[393px] glass"
+        className="glass grid h-[449px] w-full place-items-center  rounded-lg border sm:h-[293px] md:h-[317px]"
       >
         <Spinner />
       </section>
@@ -83,18 +47,18 @@ export const Weather = ({ location, units }: WeatherProps) => {
   return (
     <section
       id="weather"
-      className="flex justify-center sm:justify-between w-full border  rounded-lg px-6 py-8 transition-colors duration-500 glass
+      className="glass flex w-full justify-center rounded-lg  border px-6 py-8 transition-colors duration-500 sm:justify-between
 "
     >
       <div
         id="left"
-        className="sm:max-w-[280px] md:max-w-xs w-full sm:block flex flex-col-reverse"
+        className="flex w-full flex-col-reverse sm:block sm:max-w-[280px] md:max-w-xs"
       >
         <div className="flex justify-center">
           <div>
-            <p className="text-7xl md:text-8xl font-thin text-center">
+            <p className="text-center text-7xl font-thin md:text-8xl">
               {Math.round(weather.main.temp)}°
-              <sup className="text-3xl md:text-5xl font-semibold sm:font-medium">
+              <sup className="text-3xl font-semibold sm:font-medium md:text-5xl">
                 {unit}
               </sup>
             </p>
@@ -113,25 +77,25 @@ export const Weather = ({ location, units }: WeatherProps) => {
             </div>
           </div>
         </div>
-        <hr className="my-4 dark:border-gray-800 border-white transition-colors duration-500" />
+        <hr className="my-4 border-white transition-colors duration-500 dark:border-gray-800" />
         <div className="text-center capitalize">
           <Araw
             unix={Date.now() / 1000}
             timeZone={forecast.timezone}
-            className="block sm:hidden font-bold text-xl"
+            className="block text-xl font-bold sm:hidden"
             options={{ year: undefined }}
           />
           <Oras
             unix={Date.now() / 1000}
             timeZone={forecast.timezone}
-            className="block sm:hidden dark:font-semibold text-lg"
+            className="block text-lg dark:font-semibold sm:hidden"
             meridiemClasses="text-sm"
           />
           <WeatherIcons
             code={weather.weather[0].icon}
             className="m-auto w-[170px] sm:w-[70px]"
           />
-          <p className="text-xl sm:text-lg dark:font-semibold">
+          <p className="text-xl dark:font-semibold sm:text-lg">
             {weather.weather[0].description}
           </p>
         </div>
@@ -139,13 +103,13 @@ export const Weather = ({ location, units }: WeatherProps) => {
 
       <div
         id="right"
-        className="sm:max-w-[280px] md:max-w-xs w-full hidden sm:block"
+        className="hidden w-full sm:block sm:max-w-[280px] md:max-w-xs"
       >
         <div className="text-center">
           <Oras
             unix={Date.now() / 1000}
             timeZone={forecast.timezone}
-            className="text-9xl sm:text-7xl md:text-8xl font-thin"
+            className="text-9xl font-thin sm:text-7xl md:text-8xl"
             meridiemClasses="text-lg dark:font-semibold"
           />
           <Araw
@@ -154,7 +118,7 @@ export const Weather = ({ location, units }: WeatherProps) => {
             className="dark:font-semibold"
           />
         </div>
-        <hr className="my-4 dark:border-gray-800 border-white transition-colors duration-500" />
+        <hr className="my-4 border-white transition-colors duration-500 dark:border-gray-800" />
         <div className="flex items-center justify-around">
           <div>
             <SunRise width={70} className="m-auto" />

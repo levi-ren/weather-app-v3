@@ -1,8 +1,8 @@
 import { Location } from "../api";
-import { WeatherIcons } from "../assets/icons";
 import { DailyForecast as DF } from "../interfaces/weather-models";
 import { dateToLocaleString } from "../utils/helpers";
 import { useWeatherQuery } from "../utils/useWeatherQuery";
+import { WeatherIcons } from "./icons";
 import { Spinner } from "./spinner";
 
 interface IForecastProps {
@@ -21,7 +21,7 @@ const DailyForecast = ({ weather, timeZone, unit }: IForecastProps) => {
   }).split(", ");
 
   return (
-    <div className="text-center p-4 border rounded-lg transition-colors duration-500 glass dark:font-semibold">
+    <div className="glass rounded-lg border p-4 text-center transition-colors duration-500 dark:font-semibold">
       <p>{weekday}</p>
       <p>{date}</p>
       <WeatherIcons code={weather.weather[0].icon} width={100} />
@@ -49,13 +49,13 @@ export const Forecast = ({ location, units }: ForecastProps) => {
     return (
       <section
         id="forecasts loader"
-        className="p-4 overflow-hidden w-full max-w-3xl"
+        className="m-auto w-full max-w-3xl overflow-hidden p-4"
       >
-        <div className="flex justify-between overflow-x-auto gap-4">
+        <div className="flex justify-between gap-4 overflow-x-auto">
           {Array.from({ length: 5 }).map((_, i) => (
             <div
               key={i}
-              className="border  rounded-lg h-[230px] grid place-items-center min-w-[134px] glass"
+              className="glass  grid h-[230px] min-w-[134px] place-items-center rounded-lg border"
             >
               <Spinner />
             </div>
@@ -72,8 +72,11 @@ export const Forecast = ({ location, units }: ForecastProps) => {
   const { forecast } = data;
 
   return (
-    <section id="forecasts" className="p-4 overflow-hidden w-full max-w-3xl">
-      <div className="flex justify-between overflow-x-auto gap-4">
+    <section
+      id="forecasts"
+      className="m-auto w-full max-w-3xl  overflow-hidden p-4"
+    >
+      <div className="flex justify-between gap-4 overflow-x-auto">
         {forecast.daily.slice(1, 6).map((weather, i) => (
           <DailyForecast
             key={i}

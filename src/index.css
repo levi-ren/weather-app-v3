@@ -4,7 +4,7 @@
 
 @layer components {
   .glass {
-    @apply dark:bg-gray-100 dark:bg-opacity-30 dark:border-white dark:text-gray-900 bg-gray-800  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border-gray-400 text-white;
+    @apply border-gray-400 bg-gray-800 bg-opacity-70 bg-clip-padding text-white  backdrop-blur-sm backdrop-filter dark:border-white dark:bg-gray-100 dark:bg-opacity-30 dark:text-gray-900;
   }
 }
 

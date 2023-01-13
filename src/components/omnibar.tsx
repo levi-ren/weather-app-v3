@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, useRef, useState } from "react";
 import { fetchLocations, Location } from "../api";
+import { ReactComponent as Magnify } from "../assets/magnify.svg";
 import countryCodes from "../utils/country-codes.json";
 import { useDebounce } from "../utils/useDebounce";
 import { Spinner } from "./spinner";
@@ -25,36 +26,22 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
   };
 
   return (
-    <div id="search" className="w-full relative">
+    <div id="search" className="relative w-full">
       <label
         htmlFor="default-search"
-        className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+        className="sr-only mb-2 text-sm font-medium text-gray-900 dark:text-white"
       >
         Search
       </label>
       <div className="relative ">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5 text-white dark:text-gray-900 z-10"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            ></path>
-          </svg>
+        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+          <Magnify className="z-10 h-5 w-5 text-white dark:text-gray-900" />
         </div>
         <input
           ref={inputRef}
           type="search"
           id="default-search"
-          className={`block w-full p-4 pl-10 text-sm rounded-lg placeholder-white border outline-gray-600 transition-colors duration-500  dark:font-bold  glass`}
+          className={`glass block w-full rounded-lg border p-4 pl-10 text-sm placeholder-white outline-gray-600 transition-colors  duration-500  dark:font-bold`}
           placeholder="Search City, State, Country"
           onChange={handleChange}
           onFocus={() => setFocused(true)}
@@ -67,14 +54,14 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
         />
       </div>
       <div
-        className={`absolute w-full mt-1  rounded-lg z-10 border divide-gray-100 transition-all duration-300 overflow-x-auto max-h-[40vh] glass backdrop-blur-md bg-opacity-90 dark:bg-opacity-50
+        className={`glass absolute z-10  mt-1 max-h-[40vh] w-full divide-gray-100 overflow-x-auto rounded-lg border bg-opacity-90 backdrop-blur-md transition-all duration-300 dark:bg-opacity-50
         ${
           (data || search) && focused && !isError
             ? "opacity-100"
-            : "opacity-0 invisible"
+            : "invisible opacity-0"
         }`}
       >
-        <div className="flex justify-between items-center ">
+        <div className="flex items-center justify-between ">
           <p className="p-2 text-sm font-bold dark:font-extrabold">
             Search for: {search}
           </p>
@@ -86,7 +73,7 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
             {data.map((loc, i) => (
               <div
                 key={`${loc.lat},${loc.lon}`}
-                className="w-full px-2 py-4 cursor-pointer dark:hover:bg-gray-300 hover:bg-gray-600 transition-colors dark:font-semibold first:border-t"
+                className="w-full cursor-pointer px-2 py-4 transition-colors first:border-t hover:bg-gray-600 dark:font-semibold dark:hover:bg-gray-300"
                 onClick={() => {
                   if (inputRef.current) {
                     inputRef.current.value = `${loc.name}${
@@ -103,7 +90,7 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
           </div>
         )}
         {!isFetching && data && data.length === 0 && (
-          <em className="text-center p-4 block dark:font-semibold">
+          <em className="block p-4 text-center dark:font-semibold">
             --- No Results Found ---
           </em>
         )}

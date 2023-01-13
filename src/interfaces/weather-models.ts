@@ -1,4 +1,4 @@
-import { WeatherCodes } from "../assets/icons";
+import { WeatherCodes } from "../components/icons";
 import { default as countryCodes } from "../utils/country-codes.json";
 
 interface Weather {

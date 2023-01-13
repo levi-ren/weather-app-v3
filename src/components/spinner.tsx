@@ -8,7 +8,7 @@ export const Spinner = ({ className }: SpinnerProps) => {
       <div role="status">
         <svg
           aria-hidden="true"
-          className="inline w-4 h-4 sm:w-6 sm:h-6 mr-2  animate-spin text-gray-800 fill-white "
+          className="mr-2 inline h-4 w-4 animate-spin fill-white  text-gray-800 sm:h-6 sm:w-6 "
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
