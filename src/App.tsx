@@ -34,7 +34,7 @@ const Main = () => {
 
   return (
     <main id="app" className={`${meridiem === "PM" && "dark"}`}>
-      <div className="bg-day dark:bg-night transition-all duration-500 bg-no-repeat bg-cover bg-fixed">
+      <div className="dark:bg-gray-300 gray-600">
         <div className="max-w-7xl m-auto flex flex-col items-center justify-center min-h-screen p-2 gap-4">
           <Omnibar setLocation={setLocation} />
 
