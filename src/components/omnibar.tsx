@@ -14,7 +14,7 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
   const [search, setSearch] = useState("");
   const debSearch = useDebounce(search);
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, isError } = useQuery({
     queryKey: ["locations", debSearch],
     queryFn: () => fetchLocations(debSearch),
     enabled: !!debSearch,
@@ -54,7 +54,7 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
           ref={inputRef}
           type="search"
           id="default-search"
-          className="block w-full p-4 pl-10 text-sm rounded-lg placeholder-white border outline-gray-600 transition-colors duration-500 glass dark:font-bold"
+          className={`block w-full p-4 pl-10 text-sm rounded-lg placeholder-white border outline-gray-600 transition-colors duration-500  dark:font-bold  glass`}
           placeholder="Search City, State, Country"
           onChange={handleChange}
           onFocus={() => setFocused(true)}
@@ -68,21 +68,25 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
       </div>
       <div
         className={`absolute w-full mt-1  rounded-lg z-10 border divide-gray-100 transition-all duration-300 overflow-x-auto max-h-[40vh] glass backdrop-blur-md bg-opacity-90 dark:bg-opacity-50
-        ${(data || search) && focused ? "opacity-100" : "opacity-0 invisible"}`}
+        ${
+          (data || search) && focused && !isError
+            ? "opacity-100"
+            : "opacity-0 invisible"
+        }`}
       >
-        <div className="flex justify-between items-center border-b">
+        <div className="flex justify-between items-center ">
           <p className="p-2 text-sm font-bold dark:font-extrabold">
             Search for: {search}
           </p>
           {isFetching && <Spinner className="" />}
         </div>
 
-        <div className="divide-y">
-          {!isFetching &&
-            data?.map((loc, i) => (
+        {!isFetching && data && (
+          <div className="divide-y">
+            {data.map((loc, i) => (
               <div
                 key={`${loc.lat},${loc.lon}`}
-                className="w-full px-2 py-4 cursor-pointer dark:hover:bg-gray-300 hover:bg-gray-600 transition-colors dark:font-semibold"
+                className="w-full px-2 py-4 cursor-pointer dark:hover:bg-gray-300 hover:bg-gray-600 transition-colors dark:font-semibold first:border-t"
                 onClick={() => {
                   if (inputRef.current) {
                     inputRef.current.value = `${loc.name}${
@@ -96,7 +100,13 @@ export const Omnibar = ({ setLocation }: OmnibarProps) => {
                 {loc.state && `, ${loc.state}`}, {countryCodes[loc.country]}
               </div>
             ))}
-        </div>
+          </div>
+        )}
+        {!isFetching && data && data.length === 0 && (
+          <em className="text-center p-4 block dark:font-semibold">
+            --- No Results Found ---
+          </em>
+        )}
       </div>
     </div>
   );

@@ -37,15 +37,15 @@ const DailyForecast = ({ weather, timeZone, unit }: IForecastProps) => {
 type ForecastProps = { location: Location; units: boolean };
 
 export const Forecast = ({ location, units }: ForecastProps) => {
-  const { data, isLoading, isError, error, isInitialLoading } = useWeatherQuery(
-    location,
-    units
-  );
+  const { data, isLoading, isError, isInitialLoading, isFetching } =
+    useWeatherQuery(location, units);
 
   const unit = units ? "F" : "C";
 
-  if (isLoading) {
-    if (!isInitialLoading) return <></>;
+  if (isLoading || isFetching) {
+    if (!isInitialLoading && !isFetching) {
+      return <></>;
+    }
     return (
       <section
         id="forecasts loader"
@@ -66,11 +66,7 @@ export const Forecast = ({ location, units }: ForecastProps) => {
   }
 
   if (isError) {
-    if (error instanceof Error) {
-      return <span>Error: {error.message}</span>;
-    }
-
-    return <>Error</>;
+    return <></>;
   }
 
   const { forecast } = data;

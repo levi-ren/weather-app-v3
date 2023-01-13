@@ -6,4 +6,5 @@ export const useWeatherQuery = (location: Location, units: boolean) =>
     queryKey: ["weather", location, units],
     queryFn: () => fetchWeather(location, units),
     enabled: Object.hasOwn(location, "name"),
+    keepPreviousData: true,
   });
